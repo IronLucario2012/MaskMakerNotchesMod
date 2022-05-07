@@ -50,6 +50,11 @@ namespace MaskMakerNotches
 
             orig(self, permaDeath, bossRush);
         }
+        public static void Hook()
+        {
+            RequestBuilder.OnUpdate.Subscribe(-499.7f, SetupRefs);
+            RequestBuilder.OnUpdate.Subscribe(0.3f, AddNotches);
+        }
         private static void SetupRefs(RequestBuilder rb)
         {
             string[] locnames = new string[NumberOfNotches];
