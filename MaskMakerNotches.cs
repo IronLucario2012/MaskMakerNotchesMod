@@ -37,9 +37,9 @@ namespace MaskMakerNotches
             ItemChangerMod.CreateSettingsProfile();
             plcs = new MMPlacement[3];
             CoordinateLocation[] locs = new CoordinateLocation[3];
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 7; i++)
             {
-                locs[i] = new MMLocation(30f + i, 7f);
+                locs[i] = new MMLocation(25f + i, 7f);
                 plcs[i] = new MMPlacement("MMNotch" + i, locs[i]);
             }
             ItemChangerMod.AddPlacements(plcs);
