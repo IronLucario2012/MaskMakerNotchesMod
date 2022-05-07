@@ -32,7 +32,10 @@ namespace MaskMakerNotches
 
             Instance = this;
             On.UIManager.StartNewGame += UIManager_StartNewGame;
-
+            if (ModHooks.GetMod("Randomizer 4") is Mod)
+            {
+                Hook();
+            }
             Log("MMN Mod Initialized");
         }
         private void UIManager_StartNewGame(On.UIManager.orig_StartNewGame orig, UIManager self, bool permaDeath, bool bossRush)
