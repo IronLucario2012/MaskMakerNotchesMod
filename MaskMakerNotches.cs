@@ -40,6 +40,7 @@ namespace MaskMakerNotches
             for (int i = 0; i < 7; i++)
             {
                 locs[i] = new MMLocation(25f + i, 7f);
+                Finder.DefineCustomLocation(locs[i]);
                 plcs[i] = new MMPlacement("MMNotch" + i, locs[i]);
             }
             ItemChangerMod.AddPlacements(plcs);
