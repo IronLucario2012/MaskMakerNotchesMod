@@ -38,9 +38,9 @@ namespace MaskMakerNotches
         private void UIManager_StartNewGame(On.UIManager.orig_StartNewGame orig, UIManager self, bool permaDeath, bool bossRush)
         {
             ItemChangerMod.CreateSettingsProfile();
-            plcs = new MMPlacement[3];
-            locs = new CoordinateLocation[3];
-            for (int i = 0; i < NumberOfNotches + 1; i++)
+            plcs = new MMPlacement[NumberOfNotches];
+            locs = new CoordinateLocation[NumberOfNotches];
+            for (int i = 0; i < locs.Length; i++)
             {
                 locs[i] = new MMLocation(25f + i, 7f, $"MMNotchLoc{i}");
                 Finder.DefineCustomLocation(locs[i]);
