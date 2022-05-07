@@ -32,7 +32,7 @@ namespace MaskMakerNotches
 
             Instance = this;
             On.UIManager.StartNewGame += UIManager_StartNewGame;
-            
+
             Log("MMN Mod Initialized");
         }
         private void UIManager_StartNewGame(On.UIManager.orig_StartNewGame orig, UIManager self, bool permaDeath, bool bossRush)
@@ -40,7 +40,7 @@ namespace MaskMakerNotches
             ItemChangerMod.CreateSettingsProfile();
             plcs = new MMPlacement[3];
             locs = new CoordinateLocation[3];
-            for (int i = 0; i < NumberOfNotches+1; i++)
+            for (int i = 0; i < NumberOfNotches + 1; i++)
             {
                 locs[i] = new MMLocation(25f + i, 7f, $"MMNotchLoc{i}");
                 Finder.DefineCustomLocation(locs[i]);
@@ -57,7 +57,7 @@ namespace MaskMakerNotches
             {
                 locnames[i] = $"MMNotchLoc{i}";
             }
-            foreach(string loc in locnames)
+            foreach (string loc in locnames)
             {
                 rb.EditLocationRequest(loc, info =>
                 {
@@ -75,10 +75,20 @@ namespace MaskMakerNotches
             static bool MatchCharmGroup(RequestBuilder rb, string item, RequestBuilder.ElementType type, out GroupBuilder gb)
             {
                 gb = rb.GetGroupFor(ItemNames.Charm_Notch);
-                
+
                 return true;
             }
         }
+        private static void AddNotches(RequestBuilder rb)
+        {
+            
+            for (int i = 0; i < NumberOfNotches-1; i++)
+            {
+                rb.AddLocationByName($"MMNotchLoc{i}");
+                rb.AddItemByName(ItemNames.Charm_Notch);
+            }
+        }
+    }
     internal class MMLocation : CoordinateLocation
     {
         public MMLocation(float X, float Y, string Name)
