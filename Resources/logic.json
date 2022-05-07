@@ -1,0 +1,26 @@
+[
+  {
+    "name": "MMNotchLoc0",
+    "logic": "Room_MaskMaker[right1]"
+  },
+  {
+    "name": "MMNotchLoc1",
+    "logic": "Room_MaskMaker[right1]"
+  },
+  {
+    "name": "MMNotchLoc2",
+    "logic": "Room_MaskMaker[right1]"
+  },
+  {
+    "name": "MMNotchLoc3",
+    "logic": "Room_MaskMaker[right1]"
+  },
+  {
+    "name": "MMNotchLoc4",
+    "logic": "Room_MaskMaker[right1]"
+  },
+  {
+    "name": "MMNotchLoc5",
+    "logic": "Room_MaskMaker[right1]"
+  }
+]
