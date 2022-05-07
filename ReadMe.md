@@ -1,3 +1,3 @@
 # MaskMakerNotches
 
-A mod for the game Hollow Knight.
+A mod that adds a few buyable Charm Notches near Mask Maker.
