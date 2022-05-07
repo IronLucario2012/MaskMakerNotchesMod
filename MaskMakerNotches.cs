@@ -8,6 +8,7 @@ using ItemChanger;
 using ItemChanger.Placements;
 using ItemChanger.Locations;
 using ItemChanger.Items;
+using RandomizerMod;
 
 namespace MaskMakerNotches
 {
@@ -15,6 +16,8 @@ namespace MaskMakerNotches
     {
         internal static MaskMakerNotches Instance;
         internal MMPlacement[] plcs;
+        internal CoordinateLocation[] locs;
+        internal static int NumberOfNotches = 6;
 
         public MaskMakerNotches() : base("MaskMakerNotches")
         {
@@ -36,8 +39,8 @@ namespace MaskMakerNotches
         {
             ItemChangerMod.CreateSettingsProfile();
             plcs = new MMPlacement[3];
-            CoordinateLocation[] locs = new CoordinateLocation[3];
-            for (int i = 0; i < 7; i++)
+            locs = new CoordinateLocation[3];
+            for (int i = 0; i < NumberOfNotches+1; i++)
             {
                 locs[i] = new MMLocation(25f + i, 7f, $"MMNotchLoc{i}");
                 Finder.DefineCustomLocation(locs[i]);
@@ -47,18 +50,35 @@ namespace MaskMakerNotches
 
             orig(self, permaDeath, bossRush);
         }
-    }
+        private static void SetupRefs(RandomizerMod.RC.RequestBuilder rb)
+        {
+            string[] locnames = new string[NumberOfNotches];
+            for (int i = 0; i < locnames.Length; i++)
+            {
+                locnames[i] = $"MMNotchLoc{i}";
+            }
+            foreach(string loc in locnames)
+            {
+                rb.EditLocationRequest(loc, info =>
+                {
+                    info.getLocationDef = () => new()
+                    {
+                        Name = loc,
+                        SceneName = Finder.GetLocation(loc).sceneName,
+                        FlexibleCount = false,
+                        AdditionalProgressionPenalty = false,
+                    };
+                });
+            }
+        }
     internal class MMLocation : CoordinateLocation
     {
-        public MMLocation(float X, float Y, string name)
+        public MMLocation(float X, float Y, string Name)
         {
+            name = Name;
             x = X;
             y = Y;
             sceneName = "Room_Mask_Maker";
-        }
-        public override string ToString()
-        {
-            return $"Scene: {sceneName}, X: {x}, Y: {y}";
         }
     }
     internal class MMPlacement : MutablePlacement
