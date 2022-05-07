@@ -28,16 +28,23 @@ namespace MaskMakerNotches
             Log("Initializing MMN Mod");
 
             Instance = this;
+            On.UIManager.StartNewGame += UIManager_StartNewGame;
+            
+            Log("MMN Mod Initialized");
+        }
+        private void UIManager_StartNewGame(On.UIManager.orig_StartNewGame orig, UIManager self, bool permaDeath, bool bossRush)
+        {
             ItemChangerMod.CreateSettingsProfile();
             plcs = new MMPlacement[3];
             CoordinateLocation[] locs = new CoordinateLocation[3];
             for (int i = 0; i < 3; i++)
             {
-                locs[i] = new MMLocation(30f+i,7f);
+                locs[i] = new MMLocation(30f + i, 7f);
                 plcs[i] = new MMPlacement("MMNotch" + i, locs[i]);
             }
             ItemChangerMod.AddPlacements(plcs);
-            Log("MMN Mod Initialized");
+
+            orig(self, permaDeath, bossRush);
         }
     }
     internal class MMLocation : CoordinateLocation
@@ -60,7 +67,7 @@ namespace MaskMakerNotches
             Cost = new GeoCost(1000);
             Location = loc;
             containerType = Container.Shiny;
-            Items.Add(new NotchItem());
+            Items.Add(Finder.GetItem(ItemNames.Charm_Notch));
         }
     }
 }
