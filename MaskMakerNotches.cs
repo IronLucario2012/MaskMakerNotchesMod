@@ -8,7 +8,7 @@ using ItemChanger;
 using ItemChanger.Placements;
 using ItemChanger.Locations;
 using ItemChanger.Items;
-using RandomizerMod;
+using RandomizerMod.RC;
 
 namespace MaskMakerNotches
 {
@@ -50,7 +50,7 @@ namespace MaskMakerNotches
 
             orig(self, permaDeath, bossRush);
         }
-        private static void SetupRefs(RandomizerMod.RC.RequestBuilder rb)
+        private static void SetupRefs(RequestBuilder rb)
         {
             string[] locnames = new string[NumberOfNotches];
             for (int i = 0; i < locnames.Length; i++)
@@ -69,6 +69,14 @@ namespace MaskMakerNotches
                         AdditionalProgressionPenalty = false,
                     };
                 });
+            }
+            rb.OnGetGroupFor.Subscribe(0f, MatchCharmGroup);
+
+            static bool MatchCharmGroup(RequestBuilder rb, string item, RequestBuilder.ElementType type, out GroupBuilder gb)
+            {
+                gb = rb.GetGroupFor(ItemNames.Charm_Notch);
+                
+                return true;
             }
         }
     internal class MMLocation : CoordinateLocation
