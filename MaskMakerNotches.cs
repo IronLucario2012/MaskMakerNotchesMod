@@ -9,6 +9,10 @@ using ItemChanger.Placements;
 using ItemChanger.Locations;
 using ItemChanger.Items;
 using RandomizerMod.RC;
+using RandomizerMod.Settings;
+using RandomizerCore.Logic;
+using System.IO;
+using System.Linq;
 
 namespace MaskMakerNotches
 {
@@ -62,6 +66,7 @@ namespace MaskMakerNotches
         {
             RequestBuilder.OnUpdate.Subscribe(-499.7f, SetupRefs);
             RequestBuilder.OnUpdate.Subscribe(0.3f, AddNotches);
+            RCData.RuntimeLogicOverride.Subscribe(50f, ApplyLogic);
         }
         private static void SetupRefs(RequestBuilder rb)
         {
@@ -70,12 +75,13 @@ namespace MaskMakerNotches
             {
                 rb.EditLocationRequest(loc, info =>
                 {
+                    Modding.Logger.Log($"Editing Location Request for {info} with {loc}.");
                     info.getLocationDef = () => new()
                     {
                         Name = loc,
                         SceneName = Finder.GetLocation(loc).sceneName,
                         FlexibleCount = false,
-                        AdditionalProgressionPenalty = false,
+                        AdditionalProgressionPenalty = false
                     };
                 });
             }
@@ -103,6 +109,11 @@ namespace MaskMakerNotches
                 }
                 return val;
             }
+        }
+        private static void ApplyLogic(GenerationSettings gs, LogicManagerBuilder lmb)
+        {
+            using Stream s = typeof(MaskMakerNotches).Assembly.GetManifestResourceStream("MaskMakerNotches.Resources.logic.json");
+            lmb.DeserializeJson(LogicManagerBuilder.JsonType.Locations, s);
         }
         private static void AddNotches(RequestBuilder rb)
         {
