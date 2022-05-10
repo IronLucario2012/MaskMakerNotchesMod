@@ -18,10 +18,15 @@ namespace MaskMakerNotches
         internal MMPlacement[] plcs;
         internal CoordinateLocation[] locs;
         internal static int NumberOfNotches = 6;
+        internal static string[] locnames = new string[NumberOfNotches];
 
         public MaskMakerNotches() : base("MaskMakerNotches")
         {
             Instance = this;
+            for (int i = 0; i < locnames.Length; i++)
+            {
+                locnames[i] = $"MMNotchLoc{i}";
+            }
         }
 
         public override string GetVersion() => "v0.1";
@@ -45,9 +50,9 @@ namespace MaskMakerNotches
             locs = new CoordinateLocation[NumberOfNotches];
             for (int i = 0; i < locs.Length; i++)
             {
-                locs[i] = new MMLocation(25f + i, 7f, $"MMNotchLoc{i}");
+                locs[i] = new MMLocation(25f + i, 7f, locnames[i]);
                 Finder.DefineCustomLocation(locs[i]);
-                plcs[i] = new MMPlacement($"MMNotchPlace{i}", locs[i]);
+                plcs[i] = new MMPlacement($"{locnames[i]}-Place", locs[i]);
             }
             ItemChangerMod.AddPlacements(plcs);
 
@@ -60,11 +65,7 @@ namespace MaskMakerNotches
         }
         private static void SetupRefs(RequestBuilder rb)
         {
-            string[] locnames = new string[NumberOfNotches];
-            for (int i = 0; i < locnames.Length; i++)
-            {
-                locnames[i] = $"MMNotchLoc{i}";
-            }
+            
             foreach (string loc in locnames)
             {
                 rb.EditLocationRequest(loc, info =>
@@ -82,18 +83,33 @@ namespace MaskMakerNotches
 
             static bool MatchCharmGroup(RequestBuilder rb, string item, RequestBuilder.ElementType type, out GroupBuilder gb)
             {
-                gb = rb.GetGroupFor(ItemNames.Charm_Notch);
-
-                return true;
+                if (IsLocation(item) && (type == RequestBuilder.ElementType.Unknown || type == RequestBuilder.ElementType.Location))
+                {
+                    gb = rb.GetGroupFor(ItemNames.Charm_Notch);
+                    return true;
+                }
+                gb = default;
+                return false;
+            }
+            static bool IsLocation(string loc)
+            {
+                bool val = false;
+                for (int i = 0; i < locnames.Length; i++)
+                {
+                    if (locnames[i].Equals(loc))
+                    {
+                        val = true;
+                    }
+                }
+                return val;
             }
         }
         private static void AddNotches(RequestBuilder rb)
         {
-            
-            for (int i = 0; i < NumberOfNotches-1; i++)
+            rb.AddItemByName(ItemNames.Charm_Notch, NumberOfNotches);
+            foreach (string loc in locnames)
             {
-                rb.AddLocationByName($"MMNotchLoc{i}");
-                rb.AddItemByName(ItemNames.Charm_Notch);
+                rb.AddLocationByName(loc);
             }
         }
     }
