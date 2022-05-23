@@ -33,7 +33,7 @@ namespace MaskMakerNotches
             }
         }
 
-        public override string GetVersion() => "v0.1";
+        public override string GetVersion() => "v1.0";
 
         public override void Initialize(Dictionary<string, Dictionary<string, GameObject>> preloadedObjects)
         {
