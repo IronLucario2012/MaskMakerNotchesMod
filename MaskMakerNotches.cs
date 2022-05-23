@@ -38,8 +38,20 @@ namespace MaskMakerNotches
         public override void Initialize(Dictionary<string, Dictionary<string, GameObject>> preloadedObjects)
         {
             Log("Initializing MMN Mod");
-
             Instance = this;
+            plcs = new MMPlacement[NumberOfNotches];
+            locs = new CoordinateLocation[NumberOfNotches];
+            for (int i = 0; i < locs.Length; i++)
+            {
+                locs[i] = new MMLocation(25f + i, 7f, locnames[i]);
+                Finder.DefineCustomLocation(locs[i]);
+                NotchItem nitem = new()
+                {
+                    name = $"MMNotch{i}"
+                };
+                Finder.DefineCustomItem(nitem);
+                plcs[i] = new MMPlacement($"{locnames[i]}-Place", locs[i]);
+            }
             On.UIManager.StartNewGame += UIManager_StartNewGame;
             if (ModHooks.GetMod("Randomizer 4") is Mod)
             {
@@ -50,14 +62,6 @@ namespace MaskMakerNotches
         private void UIManager_StartNewGame(On.UIManager.orig_StartNewGame orig, UIManager self, bool permaDeath, bool bossRush)
         {
             ItemChangerMod.CreateSettingsProfile();
-            plcs = new MMPlacement[NumberOfNotches];
-            locs = new CoordinateLocation[NumberOfNotches];
-            for (int i = 0; i < locs.Length; i++)
-            {
-                locs[i] = new MMLocation(25f + i, 7f, locnames[i]);
-                Finder.DefineCustomLocation(locs[i]);
-                plcs[i] = new MMPlacement($"{locnames[i]}-Place", locs[i]);
-            }
             ItemChangerMod.AddPlacements(plcs);
 
             orig(self, permaDeath, bossRush);
