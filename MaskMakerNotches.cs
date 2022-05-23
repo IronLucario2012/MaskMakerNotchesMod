@@ -39,6 +39,7 @@ namespace MaskMakerNotches
         {
             Log("Initializing MMN Mod");
             Instance = this;
+            ItemChangerMod.CreateSettingsProfile();
             plcs = new MMPlacement[NumberOfNotches];
             locs = new CoordinateLocation[NumberOfNotches];
             for (int i = 0; i < locs.Length; i++)
@@ -61,7 +62,6 @@ namespace MaskMakerNotches
         }
         private void UIManager_StartNewGame(On.UIManager.orig_StartNewGame orig, UIManager self, bool permaDeath, bool bossRush)
         {
-            ItemChangerMod.CreateSettingsProfile();
             ItemChangerMod.AddPlacements(plcs);
 
             orig(self, permaDeath, bossRush);
