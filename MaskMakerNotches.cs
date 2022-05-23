@@ -75,7 +75,6 @@ namespace MaskMakerNotches
             {
                 rb.EditLocationRequest(loc, info =>
                 {
-                    Modding.Logger.Log($"Editing Location Request for {info} with {loc}.");
                     info.getLocationDef = () => new()
                     {
                         Name = loc,
