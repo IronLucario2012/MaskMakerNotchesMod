@@ -29,7 +29,7 @@ namespace MaskMakerNotches
             }
         }
 
-        public override string GetVersion() => "v1.1";
+        public override string GetVersion() => "v1.2";
 
         public override void Initialize(Dictionary<string, Dictionary<string, GameObject>> preloadedObjects)
         {
@@ -59,10 +59,7 @@ namespace MaskMakerNotches
         {
             if(!bossRush)
             {
-                if (ModHooks.GetMod("Randomizer 4") is not Mod)
-                {
-                    ItemChangerMod.CreateSettingsProfile();
-                }
+                ItemChangerMod.CreateSettingsProfile(overwrite: false, createDefaultModules: false);
                 ItemChangerMod.AddPlacements(plcs);
             }
             else
