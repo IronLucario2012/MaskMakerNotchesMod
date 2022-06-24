@@ -1,9 +1,6 @@
 ﻿using Modding;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UObject = UnityEngine.Object;
 using ItemChanger;
 using ItemChanger.Placements;
 using ItemChanger.Locations;
@@ -12,7 +9,6 @@ using RandomizerMod.RC;
 using RandomizerMod.Settings;
 using RandomizerCore.Logic;
 using System.IO;
-using System.Linq;
 
 namespace MaskMakerNotches
 {
@@ -33,7 +29,7 @@ namespace MaskMakerNotches
             }
         }
 
-        public override string GetVersion() => "v1.0";
+        public override string GetVersion() => "v1.1";
 
         public override void Initialize(Dictionary<string, Dictionary<string, GameObject>> preloadedObjects)
         {
@@ -61,11 +57,18 @@ namespace MaskMakerNotches
         }
         private void UIManager_StartNewGame(On.UIManager.orig_StartNewGame orig, UIManager self, bool permaDeath, bool bossRush)
         {
-            if (ModHooks.GetMod("Randomizer 4") is not Mod)
+            if(!bossRush)
             {
-                ItemChangerMod.CreateSettingsProfile();
+                if (ModHooks.GetMod("Randomizer 4") is not Mod)
+                {
+                    ItemChangerMod.CreateSettingsProfile();
+                }
+                ItemChangerMod.AddPlacements(plcs);
             }
-            ItemChangerMod.AddPlacements(plcs);
+            else
+            {
+                Log("Not adding notches to Godseeker Save");
+            }
 
             orig(self, permaDeath, bossRush);
         }

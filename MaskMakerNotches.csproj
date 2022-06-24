@@ -12,7 +12,7 @@
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <LangVersion>latest</LangVersion>
     <HollowKnightRefs>E:\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed</HollowKnightRefs>
-    <ExportDir>E:\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods</ExportDir>
+    <ExportDir>C:\Users\Jack\Desktop\Stuff\Games\Hollow Knight Modding\Mods</ExportDir>
   </PropertyGroup>
   <Target Name="CopyMod" AfterTargets="PostBuildEvent">
     <RemoveDir Directories="$(ExportDir)/$(TargetName)/" />
