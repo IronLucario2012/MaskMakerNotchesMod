@@ -29,7 +29,7 @@ namespace MaskMakerNotches
             }
         }
 
-        public override string GetVersion() => "v1.2";
+        public override string GetVersion() => "v1.2.1";
 
         public override void Initialize(Dictionary<string, Dictionary<string, GameObject>> preloadedObjects)
         {
@@ -57,14 +57,14 @@ namespace MaskMakerNotches
         }
         private void UIManager_StartNewGame(On.UIManager.orig_StartNewGame orig, UIManager self, bool permaDeath, bool bossRush)
         {
-            if(!bossRush)
+            if(!bossRush && !RandomizerMod.RandomizerMod.IsRandoSave)
             {
                 ItemChangerMod.CreateSettingsProfile(overwrite: false, createDefaultModules: false);
                 ItemChangerMod.AddPlacements(plcs);
             }
             else
             {
-                Log("Not adding notches to Godseeker Save");
+                Log("Not adding vanilla notch placements to Godseeker/Randomizer Save");
             }
 
             orig(self, permaDeath, bossRush);
