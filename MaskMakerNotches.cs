@@ -9,6 +9,7 @@ using RandomizerMod.RC;
 using RandomizerMod.Settings;
 using RandomizerCore.Logic;
 using System.IO;
+using System;
 
 namespace MaskMakerNotches
 {
@@ -57,7 +58,20 @@ namespace MaskMakerNotches
         }
         private void UIManager_StartNewGame(On.UIManager.orig_StartNewGame orig, UIManager self, bool permaDeath, bool bossRush)
         {
-            if(!bossRush && !RandomizerMod.RandomizerMod.IsRandoSave)
+            bool CheckIsRandoSave()
+            {
+                return RandomizerMod.RandomizerMod.IsRandoSave;
+            }
+            bool isRandoSave = false;
+            try
+            {
+                isRandoSave = CheckIsRandoSave();
+            }
+            catch (Exception e)
+            {
+                LogError(e);
+            }
+            if (!bossRush && !isRandoSave)
             {
                 ItemChangerMod.CreateSettingsProfile(overwrite: false, createDefaultModules: false);
                 ItemChangerMod.AddPlacements(plcs);
@@ -123,6 +137,7 @@ namespace MaskMakerNotches
         }
         private static void AddNotches(RequestBuilder rb)
         {
+			//TODO: Figure out why this only adds one instead of adding 6.
             rb.AddItemByName(ItemNames.Charm_Notch, NumberOfNotches);
             foreach (string loc in locnames)
             {
