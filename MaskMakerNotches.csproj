@@ -82,6 +82,9 @@
     <Reference Include="RandomizerCore">
       <HintPath>E:\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\RandomizerCore\RandomizerCore.dll</HintPath>
     </Reference>
+    <Reference Include="RandomizerCore.Json">
+      <HintPath>E:\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\RandomizerCore.Json\RandomizerCore.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.Composition">
       <HintPath>$(HollowKnightRefs)/System.ComponentModel.Composition.dll</HintPath>
     </Reference>

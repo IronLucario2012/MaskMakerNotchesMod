@@ -8,6 +8,7 @@ using ItemChanger.Items;
 using RandomizerMod.RC;
 using RandomizerMod.Settings;
 using RandomizerCore.Logic;
+using RandomizerCore.Json;
 using System.IO;
 using System;
 
@@ -133,7 +134,8 @@ namespace MaskMakerNotches
         private static void ApplyLogic(GenerationSettings gs, LogicManagerBuilder lmb)
         {
             using Stream s = typeof(MaskMakerNotches).Assembly.GetManifestResourceStream("MaskMakerNotches.Resources.logic.json");
-            lmb.DeserializeJson(LogicManagerBuilder.JsonType.Locations, s);
+            JsonLogicFormat fmt = new();
+            lmb.DeserializeFile(LogicFileType.Locations, fmt, s);
         }
         private static void AddNotches(RequestBuilder rb)
         {
